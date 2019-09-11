@@ -1,51 +1,4 @@
-// ==UserScript==
-// @name         ASO Google Play
-// @namespace    https://github.com/ayoubfletcher
-// @version      2.2
-// @description  Your tool kit to speed up your aso abilities.
-// @author       Ayoub Fletcher
-// @match        https://play.google.com/store/apps/details?id=*
-// @grant        GM_xmlhttpRequest
-// @require      http://code.jquery.com/jquery-1.12.4.min.js
-// @connect      appbrain.com
-// @downloadURL  https://github.com/ayoubfletcher/ASO-Google-Play/raw/master/aso-google-play.user.js
-// @updateURL    https://github.com/ayoubfletcher/ASO-Google-Play/raw/master/aso-google-play.user.js
-// ==/UserScript==
 
-
-/*******************************************************************************************************************************
- *       █████╗ ██╗   ██╗ ██████╗ ██╗   ██╗██████╗     ███████╗██╗     ███████╗████████╗ ██████╗██╗  ██╗███████╗██████╗        *
- *      ██╔══██╗╚██╗ ██╔╝██╔═══██╗██║   ██║██╔══██╗    ██╔════╝██║     ██╔════╝╚══██╔══╝██╔════╝██║  ██║██╔════╝██╔══██╗       *
- *      ███████║ ╚████╔╝ ██║   ██║██║   ██║██████╔╝    █████╗  ██║     █████╗     ██║   ██║     ███████║█████╗  ██████╔╝       *
- *      ██╔══██║  ╚██╔╝  ██║   ██║██║   ██║██╔══██╗    ██╔══╝  ██║     ██╔══╝     ██║   ██║     ██╔══██║██╔══╝  ██╔══██╗       *
- *      ██║  ██║   ██║   ╚██████╔╝╚██████╔╝██████╔╝    ██║     ███████╗███████╗   ██║   ╚██████╗██║  ██║███████╗██║  ██║       *
- *      ╚═╝  ╚═╝   ╚═╝    ╚═════╝  ╚═════╝ ╚═════╝     ╚═╝     ╚══════╝╚══════╝   ╚═╝    ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝       *
- *                               (~‾▿‾)~ DONATE ME PLEASE, I NEED MONEY TO LIVE (ง •̀_•́)ง (╥_╥)                                 *
- *                 WANT TO EDIT THE SCRIPT READ THE STUFF IN THE BOTTOM IF YOU BREAK IT DON'T CRY NO MONEY NO FIX              *
- *                                 SEND MONEY OR I WILL MAKE YOUR ACCOUNT DISAPPEAR YOHAAA (∩｀-´)⊃━☆ﾟ.*･｡ﾟ                    *
- *                                   (\____/)                                                                                  *
- *                                   ( ͡ ͡° ͜ ʖ ͡ ͡°)                                                                               *
- *                                   \╭☞ \╭☞    HERE'S MY PAYAPL: https://www.paypal.me/ayoubfletcher                         *
- *                            I KNOW I'M WASTING TIME WRITING THAT CRAP BECAUSE YOU GUYS ARE STINGY                            *
- *                                   IF YOU FOUND IT OFFSENSIVE DON'T BLAME SEND ME MONEY ¯\_(ツ)_/¯.                          *
- *     DAAH I WROTE THAT STUFF TO MAKE MYSELF LOOK PROFESSIONAL (⌐■_■) KAPPA AND TRUST ME THOSE EMOJIS SO FUN TO PLAY WITH.    *
- *             OKAY WHATEVER HERE'S THE GITHUB REPO FOR THAT CRAPPY SCRIPT IF THERE WAS AN UPDATE I WOULD POST IT THERE:       *
- *                               (╯°□°）╯︵ -> https://github.com/ayoubfletcher/ASO-Google-Play                                *
- *           ( •_•)>⌐■-■ FINAL WORDS IF YOU CANNOT BUY ME A COFFEE BECAUSE ARE "STINGY" WISH ME ATLEAST A GOOD LUCK            *
- *    JUST KIDDING GOOD LUCK BUDDY SORRY FOR WASTING YOUR TIME BUT I'M JUST HAVE FUN PLAYING WITH THOSE EMOJIS “ヽ(´▽｀)ノ”.   *
- *            IF YOU GOT ANY ISSUE WITH THE SCRIPT SEND ME A MESSAGE THROUGH PAYPAL (¬‿¬)  OR THROUGH GITHUB REPO.             *
- *******************************************************************************************************************************/
-
-/**
- * @Note For faster responds consider disabling developers information or app information, or whatever you are free.
- */
-/**
- * Parameters to toggle the extraction of the fields
- * @param short_description To turn on extracting the short description of the app: value [true / false].
- * @param feature_image To turn on extracting the feature image of app: value [true / false].
- * @param app turn on extracting the app information: value [true / false].
- * @param dev To turn on extracting the developer app information and inject into the page: value [true / false].
- */
 const controls = {
     short_description: true,
     feature_image: true,
@@ -74,7 +27,7 @@ const INTERVAL_TIMER_CHECKER = 500;
  * If you want to style just do it
  */
 const styles_html = "<style>#aso-data{padding: 10px 0; text-align: center;}#aso-data i{margin-top: 10px;}#aso-data-loading{padding: 10px; text-align: center; margin-bottom: 10px; font-weight: bold;}#honor{color: #2c1912;}#aso-data i a{color: #546e7a; font-weight: bold; -webkit-transition: all 200ms; /* Safari */ transition: all 200ms;}#aso-data i a:hover{color: #29434e;}#app-data, #dev-data{text-align: center; padding: 5px;}#aso-data li{display: inline-block; width: 110px; margin: 0 3px; margin-bottom: 10px; background: #F7F7F7}.icon{height: 50px; background-position: 50% 50%; background-repeat: no-repeat; background-size: contain; position: relative}.app-age{background-color: #04B5B0; background-image: url('https://www.appbrain.com/static/images/infotile-age.png')}.app-installs{background-color: #069bf7; background-image: url('https://www.appbrain.com/static/images/infotile-download.png')}.app-ranking{background-color: #F4460A; background-position: 0 50%; background-image: url('https://www.appbrain.com/static/images/infotile-ranking.png')}.app-size{background-color: #EA6E00; background-image: url('https://www.appbrain.com/static/images/infotile-size.png')}.app-update{background-color: #e6a509; background-image: url('https://www.appbrain.com/static/images/infotile-update.png')}.app-android{background-color: #EB008B; background-image: url('https://www.appbrain.com/static/images/infotile-android.png')}.dev-age{background-color: #1E88E5; background-image: url('https://www.appbrain.com/static/images/infotile-age.png')}.dev-total-installs{background-color: #E65100; background-image: url('https://www.appbrain.com/static/images/infotile-download.png')}.dev-total-apps{background-color: #EB008B; background-image: url('https://www.appbrain.com/static/images/infotile-appcount.png')}.dev-average-rating{background-color: #80af3f; background-image: url('https://www.appbrain.com/static/images/infotile-rating.png')}.dev-recent-rating{background-color: #80af3f; background-image: url('https://www.appbrain.com/static/images/infotile-recent-rating.png')}.dev-total-rating{background-color: #80af3f; background-image: url('https://www.appbrain.com/static/images/infotile-rating-count.png')}#aso-data .value{text-align: center; padding: 15px 5px; font-family: Arial; font-size: 12px; font-weight: bold; color: #666}#aso-data .title{text-align: center; padding: 5px; font-family: Arial; font-size: 13px; color: #999; border-top: 1px solid #E1E1E1}#aso-data .header{font-size: 18px; padding: 20px 10px; color: #666; text-transform: uppercase; font-family: Arial; font-weight: bold}#description{width: 100%; float: left; margin-bottom: 20px;}#description .content{color: #fff; padding: 10px; background: #666; font-family: Arial; font-size: 15px; text-align: center}#download_apk{font-size: 14px; height: 36px; line-height: 34px; padding: 0 20px; -webkit-border-radius: 4px; border-radius: 4px; -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05); -webkit-box-sizing: border-box; box-sizing: border-box; -webkit-transition: all .2s; transition: all .2s; -webkit-user-select: none; background-color: #fff; border: 1px solid rgba(0, 0, 0, 0.17); color: #ffffff; cursor: pointer; display: inline-block; font-family: 'Roboto', sans-serif; font-size: 14px; font-style: normal; font-weight: 500; height: 36px; line-height: 34px; min-width: 40px; padding: 0 20px; position: relative; text-align: center; text-decoration: none; white-space: nowrap; vertical-align: middle; background-color: #546e7a;}#download_apk:hover{-webkit-box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.27); box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.27); cursor: pointer; background-color: #29434e;}#aso-feature-image{padding-bottom: 20px; text-align: center;}#aso-feature-image i{display: block; margin-bottom: 10px; font-weight: bold;}</style>";
-const aso_html_template = "<div id='aso-data'>{%DATA_HTML%} <i>Made by <a href='https://github.com/ayoubfletcher/ASO-Google-Play'>Ayoub Fletcher</a> with LOVE ❤️.</i><p>Honorable Mention <b id='honor'>Re-skinning</b> 🕷️.</p></div>";
+const aso_html_template = "<div id='aso-data'>{%DATA_HTML%} <i>Made by <a href='https://github.com/elgoub'></a>.</i><p>Honorable Mention <b id='honor'></p></div>";
 const desc_html_template = "<ul id='description'><div class='content'>{%SHORT_DESCRIPTION%}</div></ul>";
 const aso_html_loading_template = "<div id='aso-data-loading'>LOADING DATA 👾 ...</div>"
 const app_html_template = "<ul id='app-data'> <div class='header'> App Information</div><li> <div class='top'> <div class='icon app-installs'></div><div class='value'>{%APP_INSTALLS%}</div><div class='title'>App Installs</div></div></li><li> <div class='top'> <div class='icon app-age'></div><div class='value'>{%APP_AGE%}</div><div class='title'>App Age</div></div></li><li> <div class='top'> <div class='icon app-ranking'></div><div class='value'>{%RANKING%}</div><div class='title'>Ranking</div></div></li><li> <div class='top'> <div class='icon app-size'></div><div class='value'>{%APP_SIZE%}</div><div class='title'>App Size</div></div></li><li> <div class='top'> <div class='icon app-update'></div><div class='value'>{%LAST_UPDATE%}</div><div class='title'>Last Update</div></div></li><li> <div class='top'> <div class='icon app-android'></div><div class='value'>{%ANDROID_VERSION%}</div><div class='title'>Android Version</div></div></li></ul>";
