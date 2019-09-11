@@ -1,4 +1,17 @@
-
+// ==UserScript==
+// @name         ASO Google Play
+// @namespace    https://github.com/elgoub
+// @version      2.4.1
+// @description  Your tool kit to speed up your aso abilities.
+// @author       yacine elgoub
+// @match        https://play.google.com/store/apps/details?id=*
+// @match        https://www.appbrain.com/*
+// @grant        GM_xmlhttpRequest
+// @require      http://code.jquery.com/jquery-1.12.4.min.js
+// @connect      appbrain.com
+// @downloadURL  https://github.com/elgoub/ASO-Google-Play/blob/master/aso-google-play.user.js
+// @updateURL    https://github.com/elgoub/ASO-Google-Play/blob/master/aso-google-play.user.js
+// ==/UserScript==
 const controls = {
     short_description: true,
     feature_image: true,
