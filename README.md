@@ -38,10 +38,8 @@ This script offers the following:
   
 2. install:
 	* Install a script directly from GitHub by clicking on the "install" link in the table below.
-  ASO Google Play - [INSTALL](https://github.com/ayoubfletcher/ASO-Google-Play/raw/master/aso-google-play.user.js)
+  ASO Google Play - [INSTALL](https://github.com/elgoub/ASO-Google-Play/blob/master/aso-google-play.user.js)
  
 ## How to use
 Just Install the script and visit an app page and it will show up automatically.
-NOTE: You can control the element showing on the google play app by toggling the controls variable on the script.
-
-Made by Ayoub Fletcher with LOVE ❤️.
+NOTE: You can control the element showing on the google play app by toggling the controls variable on the script..
